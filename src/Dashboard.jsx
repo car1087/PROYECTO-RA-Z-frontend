@@ -56,7 +56,7 @@ const Dashboard = () => {
           <div className="logo">
             {/* OJO: React no puede cargar "assets/img...", 
                 tendrás que mover la imagen a la carpeta 'public' */}
-            <img src="/assets/img/img/LOGO_PILD.png" alt="Logo PILD" className="logo-pild" />
+            <img src="/LOGO_PILD.png" alt="Logo PILD" className="logo-pild" />
             <div className="logo-text">
               <h1>PILD</h1>
               <p>Personal Identification and Localization Devices</p>

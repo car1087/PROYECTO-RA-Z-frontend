@@ -262,10 +262,10 @@ body {
 }
 
 .avatar {
-  width: 200px;   /* tamaño del avatar */
-  height: 200px;
+  width: 150px;   /* tamaño del avatar */
+  height: 150px;
   background-color: var(--gris-claro);
-  border: 5px solid var(--blanco);
+  border: 3px solid var(--blanco);
   border-radius: 50%;
   box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
@@ -1052,4 +1052,15 @@ body {
   padding: 6px 0;
   border-bottom: 1px solid #eee;
   font-size: 14px;
+}
+/* ==============================
+    Inicio Area Spacing
+============================= */
+.inicio-area {
+  /* Mueve el contenido 30px a la derecha */
+  padding-left: 30px;
+  /* Añade un relleno a la derecha para que no se pegue al borde */
+  padding-right: 30px;
+  /* Añade un relleno inferior para que no se pegue al footer */
+  padding-bottom: 50px;
 }
