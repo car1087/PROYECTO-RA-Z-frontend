@@ -16,11 +16,11 @@ const InformacionMedica = () => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem('token');
+
         const headers = {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         };
-
         const [datosRes, infoRes, enfRes, alerRes, medRes] = await Promise.all([
           fetch('http://localhost:3000/api/dashboard/datos-personales', { headers }),
           fetch('http://localhost:3000/api/dashboard/informacion-medica', { headers }),

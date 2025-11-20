@@ -67,9 +67,9 @@ const Dashboard = () => {
         {/* 📋 Menú lateral */}
         <ul className="menu">
           <li><Link to="/dashboard"><span className="icon">🏠</span> Inicio</Link></li>
-          <li><Link to="/dashboard/informacion"><span className="icon">🩺</span> Mi información médica</Link></li>
+          <li><Link to="/dashboard/informacion-medica"><span className="icon">🩺</span> Mi información médica</Link></li>
           <li><Link to="/dashboard/contactos"><span className="icon">👥</span> Contactos de emergencia</Link></li>
-          <li><Link to="/dashboard/qr"><span className="icon">🔳</span> Mi dispositivo QR</Link></li>
+          <li><Link to="/dashboard/dispositivo-qr"><span className="icon">🔳</span> Mi dispositivo QR</Link></li>
           <li><Link to="/dashboard/ajustes"><span className="icon">⚙️</span> Ajustes de cuenta</Link></li>
         </ul>
       </aside>

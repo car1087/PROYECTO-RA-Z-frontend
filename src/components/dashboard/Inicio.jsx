@@ -1,4 +1,7 @@
+import { useNavigate } from 'react-router-dom';
+
 const Inicio = () => {
+  const navigate = useNavigate();
   return (
     <div className="inicio-area">
       {/* Barra de búsqueda */}
@@ -21,7 +24,7 @@ const Inicio = () => {
           <div className="card-icon">📋</div>
           <h3>Historial Médico</h3>
           <p>Revisa y actualiza tu información médica personal.</p>
-          <button className="btn">Ver Historial</button>
+          <button className="btn" onClick={() => navigate('/dashboard/informacion-medica')}>Ver Historial</button>
         </div>
 
         {/* Tarjeta: QR Activo */}
@@ -29,7 +32,7 @@ const Inicio = () => {
           <div className="card-icon">🔳</div>
           <h3>QR Activo</h3>
           <p>Genera y comparte tu código QR para emergencias.</p>
-          <button className="btn">Ver QR</button>
+          <button className="btn" onClick={() => navigate('/dashboard/dispositivo-qr')}>Ver QR</button>
         </div>
 
         {/* Tarjeta: Notificaciones */}
@@ -37,7 +40,7 @@ const Inicio = () => {
           <div className="card-icon">🔔</div>
           <h3>Notificaciones</h3>
           <p>Recibe alertas sobre actualizaciones y recordatorios.</p>
-          <button className="btn">Ver Notificaciones</button>
+          <button className="btn" onClick={() => navigate('/dashboard/notificaciones')}>Ver Notificaciones</button>
         </div>
       </div>
     </div>

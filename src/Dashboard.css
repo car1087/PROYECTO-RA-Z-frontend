@@ -411,8 +411,7 @@ body {
   border-radius: 1rem;
   padding: 2rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  max-width: 750px;
-  margin: 2rem auto;
+  width: 100%;
   transition: all 0.2s ease-in-out;
 }
 
@@ -939,9 +938,7 @@ body {
    Ajuste visual para Mi Información Médica
 =========================== */
 .layout-ancho {
-  max-width: 1200px !important;
-  width: 90%;
-  margin: 0rem auto !important;
+  width: 100%;
   display: block;
 }
 
