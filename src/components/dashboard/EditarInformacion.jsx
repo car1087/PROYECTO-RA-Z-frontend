@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import './EditarInformacion.css';
 
 const EditarInformacion = () => {
@@ -18,6 +18,9 @@ const EditarInformacion = () => {
   const [formMedicamento, setFormMedicamento] = useState({ nombre_medicamento: '', dosis: '', via_administracion: '', cantidad_dosis_dia: '' });
   const [formAlergia, setFormAlergia] = useState({ tipo_alergia: '', sustancia: '', severidad_reaccion: '' });
   const [formEnfermedad, setFormEnfermedad] = useState({ nombre_enfermedad: '' });
+  const [editingEnfermedadId, setEditingEnfermedadId] = useState(null);
+  const [editingMedicamentoId, setEditingMedicamentoId] = useState(null);
+  const [editingAlergiaId, setEditingAlergiaId] = useState(null);
 
   const calculateAge = (birthDate) => {
     if (!birthDate) return '';
@@ -130,8 +133,10 @@ const EditarInformacion = () => {
   const handleSaveMedicamento = async () => {
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch('http://localhost:3000/api/medicamentos', {
-        method: 'POST',
+      const method = editingMedicamentoId ? 'PUT' : 'POST';
+      const url = editingMedicamentoId ? `http://localhost:3000/api/medicamentos/${editingMedicamentoId}` : 'http://localhost:3000/api/medicamentos';
+      const response = await fetch(url, {
+        method,
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -140,8 +145,9 @@ const EditarInformacion = () => {
       });
 
       if (response.ok) {
-        alert('Medicamento agregado');
+        alert(editingMedicamentoId ? 'Medicamento actualizado' : 'Medicamento agregado');
         setFormMedicamento({ nombre_medicamento: '', dosis: '', via_administracion: '', cantidad_dosis_dia: '' });
+        setEditingMedicamentoId(null);
         // Refetch medicamentos
         const headers = { 'Authorization': `Bearer ${token}` };
         const res = await fetch('http://localhost:3000/api/dashboard/medicamentos', { headers });
@@ -157,8 +163,10 @@ const EditarInformacion = () => {
   const handleSaveAlergia = async () => {
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch('http://localhost:3000/api/alergias', {
-        method: 'POST',
+      const method = editingAlergiaId ? 'PUT' : 'POST';
+      const url = editingAlergiaId ? `http://localhost:3000/api/alergias/${editingAlergiaId}` : 'http://localhost:3000/api/alergias';
+      const response = await fetch(url, {
+        method,
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -167,8 +175,9 @@ const EditarInformacion = () => {
       });
 
       if (response.ok) {
-        alert('Alergia agregada');
+        alert(editingAlergiaId ? 'Alergia actualizada' : 'Alergia agregada');
         setFormAlergia({ tipo_alergia: '', sustancia: '', severidad_reaccion: '' });
+        setEditingAlergiaId(null);
         // Refetch alergias
         const headers = { 'Authorization': `Bearer ${token}` };
         const res = await fetch('http://localhost:3000/api/dashboard/alergias', { headers });
@@ -184,8 +193,10 @@ const EditarInformacion = () => {
   const handleSaveEnfermedad = async () => {
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch('http://localhost:3000/api/enfermedades', {
-        method: 'POST',
+      const method = editingEnfermedadId ? 'PUT' : 'POST';
+      const url = editingEnfermedadId ? `http://localhost:3000/api/enfermedades/${editingEnfermedadId}` : 'http://localhost:3000/api/enfermedades';
+      const response = await fetch(url, {
+        method,
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -194,14 +205,102 @@ const EditarInformacion = () => {
       });
 
       if (response.ok) {
-        alert('Enfermedad agregada');
+        alert(editingEnfermedadId ? 'Enfermedad actualizada' : 'Enfermedad agregada');
         setFormEnfermedad({ nombre_enfermedad: '' });
+        setEditingEnfermedadId(null);
         // Refetch enfermedades
         const headers = { 'Authorization': `Bearer ${token}` };
         const res = await fetch('http://localhost:3000/api/dashboard/enfermedades-base', { headers });
         setEnfermedades(await res.json());
       } else {
         alert('Error al guardar');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  const handleEditEnfermedad = (enfermedad) => {
+    setEditingEnfermedadId(enfermedad.id);
+    setFormEnfermedad({ nombre_enfermedad: enfermedad.nombre_enfermedad });
+  };
+
+  const handleDeleteEnfermedad = async (id) => {
+    const token = localStorage.getItem('token');
+    try {
+      const response = await fetch(`http://localhost:3000/api/enfermedades/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` },
+      });
+
+      if (response.ok) {
+        // Refetch enfermedades
+        const headers = { 'Authorization': `Bearer ${token}` };
+        const res = await fetch('http://localhost:3000/api/dashboard/enfermedades-base', { headers });
+        setEnfermedades(await res.json());
+      } else {
+        alert('Error al eliminar');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  const handleEditMedicamento = (medicamento) => {
+    setEditingMedicamentoId(medicamento.id);
+    setFormMedicamento({
+      nombre_medicamento: medicamento.nombre_medicamento,
+      dosis: medicamento.dosis,
+      via_administracion: medicamento.via_administracion,
+      cantidad_dosis_dia: medicamento.cantidad_dosis_dia
+    });
+  };
+
+  const handleDeleteMedicamento = async (id) => {
+    const token = localStorage.getItem('token');
+    try {
+      const response = await fetch(`http://localhost:3000/api/medicamentos/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` },
+      });
+
+      if (response.ok) {
+        // Refetch medicamentos
+        const headers = { 'Authorization': `Bearer ${token}` };
+        const res = await fetch('http://localhost:3000/api/dashboard/medicamentos', { headers });
+        setMedicamentos(await res.json());
+      } else {
+        alert('Error al eliminar');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  const handleEditAlergia = (alergia) => {
+    setEditingAlergiaId(alergia.id);
+    setFormAlergia({
+      tipo_alergia: alergia.tipo_alergia,
+      sustancia: alergia.sustancia,
+      severidad_reaccion: alergia.severidad_reaccion
+    });
+  };
+
+  const handleDeleteAlergia = async (id) => {
+    const token = localStorage.getItem('token');
+    try {
+      const response = await fetch(`http://localhost:3000/api/alergias/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` },
+      });
+
+      if (response.ok) {
+        // Refetch alergias
+        const headers = { 'Authorization': `Bearer ${token}` };
+        const res = await fetch('http://localhost:3000/api/dashboard/alergias', { headers });
+        setAlergias(await res.json());
+      } else {
+        alert('Error al eliminar');
       }
     } catch (error) {
       console.error('Error:', error);
@@ -279,9 +378,17 @@ const EditarInformacion = () => {
         return (
           <form className="formulario">
             <h2>Medicamentos</h2>
-            <div className="form-enfermedades">
-              {medicamentos.map(m => <div key={m.id} className="enfermedad">{m.nombre_medicamento} - {m.dosis} ({m.via_administracion})</div>)}
-            </div>
+            <ul className="form-enfermedades">
+              {medicamentos.map(m => (
+                <li key={m.id} className="enfermedad-item">
+                  <span>{m.nombre_medicamento} - {m.dosis} ({m.via_administracion})</span>
+                  <div className="buttons">
+                    <button type="button" onClick={() => handleEditMedicamento(m)}>✏️</button>
+                    <button type="button" onClick={() => handleDeleteMedicamento(m.id)}>🗑️</button>
+                  </div>
+                </li>
+              ))}
+            </ul>
             <div className="form-group">
               <label>Nombre del medicamento</label>
               <input type="text" value={formMedicamento.nombre_medicamento} onChange={(e) => setFormMedicamento({...formMedicamento, nombre_medicamento: e.target.value})} />
@@ -299,7 +406,7 @@ const EditarInformacion = () => {
               <input type="number" value={formMedicamento.cantidad_dosis_dia} onChange={(e) => setFormMedicamento({...formMedicamento, cantidad_dosis_dia: e.target.value})} />
             </div>
             <div className="botonera">
-              <button type="button" className="btn-guardar" onClick={handleSaveMedicamento}>Guardar cambios</button>
+              <button type="button" className="btn-guardar" onClick={handleSaveMedicamento}>{editingMedicamentoId ? 'Actualizar medicamento' : 'Agregar medicamento'}</button>
               <button type="button" className="btn-volver" onClick={handleBackToMenu}>Volver al menú</button>
             </div>
           </form>
@@ -308,9 +415,17 @@ const EditarInformacion = () => {
         return (
           <form className="formulario">
             <h2>Alergias</h2>
-            <div className="form-enfermedades">
-              {alergias.map(a => <div key={a.id} className="enfermedad">{a.tipo_alergia}: {a.sustancia} ({a.severidad_reaccion})</div>)}
-            </div>
+            <ul className="form-enfermedades">
+              {alergias.map(a => (
+                <li key={a.id} className="enfermedad-item">
+                  <span>{a.tipo_alergia}: {a.sustancia} ({a.severidad_reaccion})</span>
+                  <div className="buttons">
+                    <button type="button" onClick={() => handleEditAlergia(a)}>✏️</button>
+                    <button type="button" onClick={() => handleDeleteAlergia(a.id)}>🗑️</button>
+                  </div>
+                </li>
+              ))}
+            </ul>
             <div className="form-group">
               <label>Tipo de alergia</label>
               <input type="text" value={formAlergia.tipo_alergia} onChange={(e) => setFormAlergia({...formAlergia, tipo_alergia: e.target.value})} />
@@ -324,7 +439,7 @@ const EditarInformacion = () => {
               <input type="text" value={formAlergia.severidad_reaccion} onChange={(e) => setFormAlergia({...formAlergia, severidad_reaccion: e.target.value})} />
             </div>
             <div className="botonera">
-              <button type="button" className="btn-guardar" onClick={handleSaveAlergia}>Guardar cambios</button>
+              <button type="button" className="btn-guardar" onClick={handleSaveAlergia}>{editingAlergiaId ? 'Actualizar alergia' : 'Agregar alergia'}</button>
               <button type="button" className="btn-volver" onClick={handleBackToMenu}>Volver al menú</button>
             </div>
           </form>
@@ -333,15 +448,23 @@ const EditarInformacion = () => {
         return (
           <form className="formulario">
             <h2>Enfermedades de Base</h2>
-            <div className="form-enfermedades">
-              {enfermedades.map(e => <div key={e.id} className="enfermedad">{e.nombre_enfermedad}</div>)}
-            </div>
+            <ul className="form-enfermedades">
+              {enfermedades.map(e => (
+                <li key={e.id} className="enfermedad-item">
+                  <span>{e.nombre_enfermedad}</span>
+                  <div className="buttons">
+                    <button type="button" onClick={() => handleEditEnfermedad(e)}>✏️</button>
+                    <button type="button" onClick={() => handleDeleteEnfermedad(e.id)}>🗑️</button>
+                  </div>
+                </li>
+              ))}
+            </ul>
             <div className="form-group">
               <label>Nombre de la enfermedad</label>
               <textarea rows="2" value={formEnfermedad.nombre_enfermedad} onChange={(e) => setFormEnfermedad({...formEnfermedad, nombre_enfermedad: e.target.value})}></textarea>
             </div>
             <div className="botonera">
-              <button type="button" className="btn-guardar" onClick={handleSaveEnfermedad}>Guardar cambios</button>
+              <button type="button" className="btn-guardar" onClick={handleSaveEnfermedad}>{editingEnfermedadId ? 'Actualizar enfermedad' : 'Agregar enfermedad'}</button>
               <button type="button" className="btn-volver" onClick={handleBackToMenu}>Volver al menú</button>
             </div>
           </form>
@@ -357,15 +480,11 @@ const EditarInformacion = () => {
         {!selectedForm ? (
           <>
             <ul>
-              <li><a href="#" onClick={(e) => { e.preventDefault(); handleSubmodulo('datos_personales'); }}>Datos personales</a></li>
-              <li><a href="#" onClick={(e) => { e.preventDefault(); handleSubmodulo('enfermedades_base'); }}>Enfermedades de base</a></li>
-              <li><a href="#" onClick={(e) => { e.preventDefault(); handleSubmodulo('medicamentos'); }}>Medicamentos</a></li>
-              <li><a href="#" onClick={(e) => { e.preventDefault(); handleSubmodulo('alergias'); }}>Alergias</a></li>
+              <li><NavLink to="#" onClick={(e) => { e.preventDefault(); handleSubmodulo('datos_personales'); }} className={selectedForm === 'datos_personales' ? 'active' : ''}>Datos personales</NavLink></li>
+              <li><NavLink to="#" onClick={(e) => { e.preventDefault(); handleSubmodulo('enfermedades_base'); }} className={selectedForm === 'enfermedades_base' ? 'active' : ''}>Enfermedades de base</NavLink></li>
+              <li><NavLink to="#" onClick={(e) => { e.preventDefault(); handleSubmodulo('medicamentos'); }} className={selectedForm === 'medicamentos' ? 'active' : ''}>Medicamentos</NavLink></li>
+              <li><NavLink to="#" onClick={(e) => { e.preventDefault(); handleSubmodulo('alergias'); }} className={selectedForm === 'alergias' ? 'active' : ''}>Alergias</NavLink></li>
             </ul>
-
-            <button className="btn" onClick={handleVolver}>
-              ← Volver
-            </button>
           </>
         ) : (
           renderForm()

@@ -84,14 +84,16 @@ body {
 .sidebar-header .logo-text p {
   color: var(--blanco);
   opacity: 0.9;
-  font-size: 0.75rem;
-  margin-top: 0.3rem;
+  font-size: 0.65rem;
+  margin-top: 0.2rem;
+  line-height: 1.2;
+  text-align: center;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+  gap: 0.5rem;
 }
 
 .logo-icon {
@@ -207,7 +209,7 @@ body {
 .user-avatar {
   position: absolute;
   right: 0rem;
-  bottom: -190px; /* si estaba -60, súbelo un poco */
+  bottom: -70px; /* si estaba -60, súbelo un poco */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -274,6 +276,19 @@ body {
   margin-top: 0.5rem;
   font-size: 1rem;
   color: var(--gris-oscuro);
+}
+
+.profile-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: var(--blanco);
+  border: 2px solid var(--blanco);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
 }
 
 /* ==============================

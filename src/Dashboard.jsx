@@ -54,8 +54,7 @@ const Dashboard = () => {
       <aside className={`sidebar ${sidebarActive ? 'active' : ''}`} id="sidebar">
         <div className="sidebar-header">
           <div className="logo">
-            {/* OJO: React no puede cargar "assets/img...", 
-                tendrás que mover la imagen a la carpeta 'public' */}
+            
             <img src="/LOGO_PILD.png" alt="Logo PILD" className="logo-pild" />
             <div className="logo-text">
               <h1>PILD</h1>
@@ -83,8 +82,8 @@ const Dashboard = () => {
           <div className="user-panel">
             <a href="#" className="logout" onClick={handleLogout}>Cerrar sesión</a>
             <div className="user-avatar">
-              <div className="avatar"></div>
-              <span className="user-role">{usuario ? usuario.email : 'Cargando...'}</span>
+              <div className="profile-photo">👤</div>
+              <span className="user-role">{usuario ? usuario.rol : 'Cargando...'}</span>
             </div>
           </div>
         </header>

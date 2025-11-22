@@ -1,0 +1,61 @@
+.modulo.editar-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.modulo.editar-info ul li {
+  margin: 10px 0;
+}
+
+.modulo.editar-info ul li a {
+  text-decoration: none;
+  font-size: 16px;
+  color: #000;
+  background-color: white;
+  display: block;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.modulo.editar-info ul li a.active {
+  background-color: transparent !important;
+  color: #007bff;
+}
+
+.modulo.editar-info ul li a:hover {
+  color: #007bff;
+  background-color: #f8f9fa;
+}
+
+.form-enfermedades {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.enfermedad-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.buttons button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px;
+}
+
+.buttons button:hover {
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
