@@ -15,6 +15,7 @@ const VerQR = () => {
         });
         if (response.ok) {
           const data = await response.json();
+          console.log('Usuario obtenido:', data.user);
           setUsuario(data.user);
         }
       } catch (error) {
@@ -28,6 +29,7 @@ const VerQR = () => {
     if (usuario) {
       const origin = window.location.origin;
       const publicUrl = `${origin}/perfil-publico/${usuario.id}`;
+      console.log('URL pública construida:', publicUrl);
       setUrl(publicUrl);
     }
   }, [usuario]);

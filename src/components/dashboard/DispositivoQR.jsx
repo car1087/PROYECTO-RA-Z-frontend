@@ -1,4 +1,4 @@
-import { Link, Outlet } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const DispositivoQR = () => {
   return (
@@ -9,12 +9,7 @@ const DispositivoQR = () => {
         <Link to="ver-qr" className="link-submodulo">
           Ver código QR e ID único
         </Link>
-
-        <Link to="estado" className="link-submodulo">
-          Estado del dispositivo
-        </Link>
       </div>
-      <Outlet />
     </div>
   );
 };
