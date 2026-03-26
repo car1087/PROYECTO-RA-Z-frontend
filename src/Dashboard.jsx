@@ -9,6 +9,8 @@ const Dashboard = () => {
   const [sidebarActive, setSidebarActive] = useState(false);
   const [usuario, setUsuario] = useState(null);
 
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -16,7 +18,7 @@ const Dashboard = () => {
       return;
     }
     const fetchUsuario = async () => {
-      const response = await fetch('http://localhost:3000/api/auth/me', {
+      const response = await fetch(`${API_URL}/api/auth/me`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (response.ok) {
@@ -28,7 +30,7 @@ const Dashboard = () => {
       }
     };
     fetchUsuario();
-  }, [navigate]);
+  }, [navigate, API_URL]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');

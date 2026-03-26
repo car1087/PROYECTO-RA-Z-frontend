@@ -9,12 +9,14 @@ const VerQR = () => {
   const [contactos, setContactos] = useState([]);
   const [formContacto, setFormContacto] = useState({ nombre: '', relacion: '', telefono: '' });
 
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
   useEffect(() => {
     const fetchUser = async () => {
       const token = localStorage.getItem('token');
       if (!token) return;
       try {
-        const response = await fetch('http://localhost:3000/api/auth/me', {
+        const response = await fetch(`${API_URL}/api/auth/me`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {
@@ -27,7 +29,7 @@ const VerQR = () => {
       }
     };
     fetchUser();
-  }, []);
+  }, [API_URL]);
 
   useEffect(() => {
     if (usuario) {
@@ -43,7 +45,7 @@ const VerQR = () => {
       const token = localStorage.getItem('token');
       const headers = { 'Authorization': `Bearer ${token}` };
       try {
-        const response = await fetch('http://localhost:3000/api/dashboard/dispositivo/estado', { headers });
+        const response = await fetch(`${API_URL}/api/dashboard/dispositivo/estado`, { headers });
         if (response.ok) {
           const data = await response.json();
           setEstado(data.estado);
@@ -53,14 +55,14 @@ const VerQR = () => {
       }
     };
     fetchEstado();
-  }, []);
+  }, [API_URL]);
 
   useEffect(() => {
     const fetchContactos = async () => {
       const token = localStorage.getItem('token');
       const headers = { 'Authorization': `Bearer ${token}` };
       try {
-        const response = await fetch('http://localhost:3000/api/dashboard/contactos', { headers });
+        const response = await fetch(`${API_URL}/api/dashboard/contactos`, { headers });
         if (response.ok) {
           const data = await response.json();
           setContactos(data);
@@ -70,7 +72,7 @@ const VerQR = () => {
       }
     };
     fetchContactos();
-  }, []);
+  }, [API_URL]);
 
   return (
     <div>

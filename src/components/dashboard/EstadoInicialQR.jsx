@@ -3,12 +3,14 @@ import { useState, useEffect } from 'react';
 const EstadoInicialQR = () => {
   const [estado, setEstado] = useState('');
 
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
   useEffect(() => {
     const fetchEstado = async () => {
       const token = localStorage.getItem('token');
       const headers = { 'Authorization': `Bearer ${token}` };
       try {
-        const response = await fetch('http://localhost:3000/api/dashboard/dispositivo/estado', { headers });
+        const response = await fetch(`${API_URL}/api/dashboard/dispositivo/estado`, { headers });
         if (response.ok) {
           const data = await response.json();
           setEstado(data.estado);
@@ -18,7 +20,7 @@ const EstadoInicialQR = () => {
       }
     };
     fetchEstado();
-  }, []);
+  }, [API_URL]);
 
   return (
     <div>

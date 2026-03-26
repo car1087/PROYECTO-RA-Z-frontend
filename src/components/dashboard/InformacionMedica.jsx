@@ -12,6 +12,8 @@ const InformacionMedica = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -22,11 +24,11 @@ const InformacionMedica = () => {
           'Content-Type': 'application/json',
         };
         const [datosRes, infoRes, enfRes, alerRes, medRes] = await Promise.all([
-          fetch('http://localhost:3000/api/dashboard/datos-personales', { headers }),
-          fetch('http://localhost:3000/api/dashboard/informacion-medica', { headers }),
-          fetch('http://localhost:3000/api/dashboard/enfermedades-base', { headers }),
-          fetch('http://localhost:3000/api/dashboard/alergias', { headers }),
-          fetch('http://localhost:3000/api/dashboard/medicamentos', { headers }),
+          fetch(`${API_URL}/api/dashboard/datos-personales`, { headers }),
+          fetch(`${API_URL}/api/dashboard/informacion-medica`, { headers }),
+          fetch(`${API_URL}/api/dashboard/enfermedades-base`, { headers }),
+          fetch(`${API_URL}/api/dashboard/alergias`, { headers }),
+          fetch(`${API_URL}/api/dashboard/medicamentos`, { headers }),
         ]);
 
         if (!datosRes.ok || !infoRes.ok || !enfRes.ok || !alerRes.ok || !medRes.ok) {
@@ -52,7 +54,7 @@ const InformacionMedica = () => {
     };
 
     fetchData();
-  }, []);
+  }, [API_URL]);
 
   if (loading) {
     return <section className="modulo"><p>Cargando información médica...</p></section>;
