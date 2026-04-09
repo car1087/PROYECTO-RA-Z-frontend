@@ -8,6 +8,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [sidebarActive, setSidebarActive] = useState(false);
   const [usuario, setUsuario] = useState(null);
+  const [loadingSesion, setLoadingSesion] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -16,15 +17,26 @@ const Dashboard = () => {
       return;
     }
     const fetchUsuario = async () => {
-      const response = await fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/auth/me', {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setUsuario(data.user);
-      } else {
-        localStorage.removeItem('token');
-        navigate('/login');
+      try {
+        const response = await fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/auth/me', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setUsuario(data.user);
+          return;
+        }
+
+        // Solo cerrar sesion si el backend confirma token invalido/expirado.
+        if (response.status === 401 || response.status === 403) {
+          localStorage.removeItem('token');
+          navigate('/login');
+        }
+      } catch (error) {
+        console.error('Error validando sesion:', error);
+      } finally {
+        setLoadingSesion(false);
       }
     };
     fetchUsuario();
@@ -92,7 +104,7 @@ const Dashboard = () => {
         {/* 📦 Contenedor dinámico donde se cargarán los módulos */}
         <section className="content">
           <div id="contenido-dinamico">
-            <Outlet />
+            {loadingSesion ? <p>Cargando sesion...</p> : <Outlet />}
           </div>
         </section>
       </main>
