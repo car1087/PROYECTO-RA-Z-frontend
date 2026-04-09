@@ -9,7 +9,7 @@ const VerQR = () => {
   const [contactos, setContactos] = useState([]);
   const [formContacto, setFormContacto] = useState({ nombre: '', relacion: '', telefono: '' });
 
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+  const API_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
 
   useEffect(() => {
     const fetchUser = async () => {

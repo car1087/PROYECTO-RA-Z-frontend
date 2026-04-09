@@ -11,7 +11,7 @@ const Login = () => {
     
     try {
       // 1. Conectamos al backend real
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+      const API_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
       const response = await fetch(`${API_URL}/api/auth/login`, {
         method: 'POST',
         headers: {

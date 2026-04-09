@@ -9,7 +9,7 @@ const Dashboard = () => {
   const [sidebarActive, setSidebarActive] = useState(false);
   const [usuario, setUsuario] = useState(null);
 
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+  const API_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
 
   useEffect(() => {
     const token = localStorage.getItem('token');
