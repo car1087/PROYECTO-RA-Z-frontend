@@ -10,7 +10,7 @@ const VerQR = () => {
       const token = localStorage.getItem('token');
       if (!token) return;
       try {
-        const response = await fetch('http://localhost:3000/api/auth/me', {
+        const response = await fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/auth/me', {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {

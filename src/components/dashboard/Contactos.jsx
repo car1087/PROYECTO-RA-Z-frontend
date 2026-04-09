@@ -9,7 +9,7 @@ const Contactos = () => {
       const token = localStorage.getItem('token');
       const headers = { 'Authorization': `Bearer ${token}` };
       try {
-        const response = await fetch('http://localhost:3000/api/dashboard/contactos', { headers });
+        const response = await fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/contactos', { headers });
         if (response.ok) {
           const data = await response.json();
           setContactos(data);
@@ -24,7 +24,7 @@ const Contactos = () => {
   const handleSaveContacto = async () => {
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch('http://localhost:3000/api/contactos', {
+      const response = await fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/contactos', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -38,7 +38,7 @@ const Contactos = () => {
         setFormContacto({ nombre: '', relacion: '', telefono: '' });
         // Refetch contactos
         const headers = { 'Authorization': `Bearer ${token}` };
-        const res = await fetch('http://localhost:3000/api/dashboard/contactos', { headers });
+        const res = await fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/contactos', { headers });
         setContactos(await res.json());
       } else {
         alert('Error al guardar');

@@ -22,11 +22,11 @@ const InformacionMedica = () => {
         };
 
         const [datosRes, infoRes, enfRes, alerRes, medRes] = await Promise.all([
-          fetch('http://localhost:3000/api/dashboard/datos-personales', { headers }),
-          fetch('http://localhost:3000/api/dashboard/informacion-medica', { headers }),
-          fetch('http://localhost:3000/api/dashboard/enfermedades-base', { headers }),
-          fetch('http://localhost:3000/api/dashboard/alergias', { headers }),
-          fetch('http://localhost:3000/api/dashboard/medicamentos', { headers }),
+          fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/datos-personales', { headers }),
+          fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/informacion-medica', { headers }),
+          fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/enfermedades-base', { headers }),
+          fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/alergias', { headers }),
+          fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/medicamentos', { headers }),
         ]);
 
         if (!datosRes.ok || !infoRes.ok || !enfRes.ok || !alerRes.ok || !medRes.ok) {

@@ -41,10 +41,10 @@ const EditarInformacion = () => {
 
       try {
         const [datosRes, enfRes, alerRes, medRes] = await Promise.all([
-          fetch('http://localhost:3000/api/dashboard/datos-personales', { headers }),
-          fetch('http://localhost:3000/api/dashboard/enfermedades-base', { headers }),
-          fetch('http://localhost:3000/api/dashboard/alergias', { headers }),
-          fetch('http://localhost:3000/api/dashboard/medicamentos', { headers }),
+          fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/datos-personales', { headers }),
+          fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/enfermedades-base', { headers }),
+          fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/alergias', { headers }),
+          fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/medicamentos', { headers }),
         ]);
 
         const datos = await datosRes.json();
@@ -79,7 +79,7 @@ const EditarInformacion = () => {
       const token = localStorage.getItem('token');
       if (!token) return;
       try {
-        const response = await fetch('http://localhost:3000/api/auth/me', {
+        const response = await fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/auth/me', {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {
@@ -108,7 +108,7 @@ const EditarInformacion = () => {
   const handleSaveDatos = async () => {
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch('http://localhost:3000/api/informacion-medica', {
+      const response = await fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/informacion-medica', {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -130,7 +130,7 @@ const EditarInformacion = () => {
   const handleSaveMedicamento = async () => {
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch('http://localhost:3000/api/medicamentos', {
+      const response = await fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/medicamentos', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -144,7 +144,7 @@ const EditarInformacion = () => {
         setFormMedicamento({ nombre_medicamento: '', dosis: '', via_administracion: '', cantidad_dosis_dia: '' });
         // Refetch medicamentos
         const headers = { 'Authorization': `Bearer ${token}` };
-        const res = await fetch('http://localhost:3000/api/dashboard/medicamentos', { headers });
+        const res = await fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/medicamentos', { headers });
         setMedicamentos(await res.json());
       } else {
         alert('Error al guardar');
@@ -157,7 +157,7 @@ const EditarInformacion = () => {
   const handleSaveAlergia = async () => {
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch('http://localhost:3000/api/alergias', {
+      const response = await fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/alergias', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -171,7 +171,7 @@ const EditarInformacion = () => {
         setFormAlergia({ tipo_alergia: '', sustancia: '', severidad_reaccion: '' });
         // Refetch alergias
         const headers = { 'Authorization': `Bearer ${token}` };
-        const res = await fetch('http://localhost:3000/api/dashboard/alergias', { headers });
+        const res = await fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/alergias', { headers });
         setAlergias(await res.json());
       } else {
         alert('Error al guardar');
@@ -184,7 +184,7 @@ const EditarInformacion = () => {
   const handleSaveEnfermedad = async () => {
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch('http://localhost:3000/api/enfermedades', {
+      const response = await fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/enfermedades', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -198,7 +198,7 @@ const EditarInformacion = () => {
         setFormEnfermedad({ nombre_enfermedad: '' });
         // Refetch enfermedades
         const headers = { 'Authorization': `Bearer ${token}` };
-        const res = await fetch('http://localhost:3000/api/dashboard/enfermedades-base', { headers });
+        const res = await fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/enfermedades-base', { headers });
         setEnfermedades(await res.json());
       } else {
         alert('Error al guardar');
