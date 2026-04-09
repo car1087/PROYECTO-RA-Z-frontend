@@ -34,11 +34,6 @@ const InformacionMedica = () => {
           fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/medicamentos', { headers }),
         ]);
 
-        // Solo datos personales es critico para renderizar la vista.
-        if (datosRes.status !== 'fulfilled' || !datosRes.value.ok) {
-          throw new Error('No se pudieron cargar los datos principales');
-        }
-
         const safeJson = async (result, fallback) => {
           if (result.status !== 'fulfilled') return fallback;
           if (!result.value.ok) return fallback;
@@ -49,7 +44,18 @@ const InformacionMedica = () => {
           }
         };
 
-        const datosData = await safeJson(datosRes, null);
+        const authStatuses = [datosRes, infoRes, enfRes, alerRes, medRes]
+          .filter((r) => r.status === 'fulfilled')
+          .map((r) => r.value.status);
+
+        // Solo redirigir si el backend confirma token invalido/expirado.
+        if (authStatuses.includes(401) || authStatuses.includes(403)) {
+          localStorage.removeItem('token');
+          navigate('/login');
+          return;
+        }
+
+        const datosData = await safeJson(datosRes, {});
         const infoData = await safeJson(infoRes, null);
         const enfData = await safeJson(enfRes, []);
         const alerData = await safeJson(alerRes, []);
@@ -60,8 +66,8 @@ const InformacionMedica = () => {
         setEnfermedades(enfData);
         setAlergias(alerData);
         setMedicamentos(medData);
-      } catch (err) {
-        setError(err.message);
+      } catch {
+        setError('No se pudieron cargar algunos datos.');
       } finally {
         setLoading(false);
       }
@@ -72,10 +78,6 @@ const InformacionMedica = () => {
 
   if (loading) {
     return <section className="modulo"><p>Cargando información médica...</p></section>;
-  }
-
-  if (error) {
-    return <section className="modulo"><p>Error: {error}</p></section>;
   }
 
   const calculateAge = (birthDate) => {
@@ -96,6 +98,7 @@ const InformacionMedica = () => {
 
   return (
     <section className="modulo">
+      {error && <p className="nota">{error}</p>}
       <form className="info-form grid">
         <div className="form-group">
           <label>Nombre completo</label>
