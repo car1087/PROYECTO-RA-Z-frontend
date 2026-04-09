@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
-const API_BASE = 'https://proyecto-ra-z-backend-production.up.railway.app';
+import { API_BASE } from '../../../config/api';
 
 const InformacionMedica = () => {
   const [info, setInfo] = useState(null);

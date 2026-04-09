@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
-const API_BASE = 'https://proyecto-ra-z-backend-production.up.railway.app';
+import { API_BASE } from '../../../config/api';
 
 const Ajustes = () => {
   const [config, setConfig] = useState(null);
@@ -18,7 +17,7 @@ const Ajustes = () => {
 
     const fetchAjustes = async () => {
       try {
-        const response = await axios.get(`${API_BASE}/api/usuarios/ajustes`, {
+        const response = await axios.get(`${API_BASE}/api/auth/usuarios/ajustes`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setConfig(response.data || {});

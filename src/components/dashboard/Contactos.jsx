@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
-const API_BASE = 'https://proyecto-ra-z-backend-production.up.railway.app';
+import { API_BASE } from '../../../config/api';
 
 const Contactos = () => {
   const [contactos, setContactos] = useState([]);
@@ -18,12 +17,14 @@ const Contactos = () => {
 
     const fetchContactos = async () => {
       try {
-        const response = await axios.get(`${API_BASE}/api/contactos`, {
+        const response = await axios.get(`${API_BASE}/api/auth/contactos`, {
           headers: { Authorization: `Bearer ${token}` },
         });
+        console.log('Response contactos:', response.data);
         setContactos(response.data.contactos || response.data || []);
       } catch (err) {
         console.error('Error cargando contactos:', err);
+        console.error('Error response:', err.response?.data);
         setError('No se pudo cargar los contactos de emergencia.');
       } finally {
         setLoading(false);

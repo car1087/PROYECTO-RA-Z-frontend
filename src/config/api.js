@@ -1,0 +1,1 @@
+export const API_BASE = 'https://proyecto-ra-z-backend-production.up.railway.app';

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
-const API_BASE = 'https://proyecto-ra-z-backend-production.up.railway.app';
+import { API_BASE } from '../../../config/api';
 
 const DispositivoQR = () => {
   const [dispositivo, setDispositivo] = useState(null);
@@ -18,7 +17,7 @@ const DispositivoQR = () => {
 
     const fetchDispositivo = async () => {
       try {
-        const response = await axios.get(`${API_BASE}/api/dispositivo-qr`, {
+        const response = await axios.get(`${API_BASE}/api/auth/dispositivo-qr`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setDispositivo(response.data.dispositivo || response.data || null);

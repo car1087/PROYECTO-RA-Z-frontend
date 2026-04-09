@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE } from './config/api';
 
 const Registro = () => {
   const [role, setRole] = useState('usuario');
@@ -27,7 +28,7 @@ const Registro = () => {
     }
 
     try {
-      const response = await fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/auth/register', {
+      const response = await fetch(`${API_BASE}/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
