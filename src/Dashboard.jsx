@@ -9,6 +9,14 @@ const Dashboard = () => {
   const [sidebarActive, setSidebarActive] = useState(false);
   const [usuario, setUsuario] = useState(null);
   const [loadingSesion, setLoadingSesion] = useState(true);
+  const [avatarPreview, setAvatarPreview] = useState('');
+
+  useEffect(() => {
+    const savedAvatar = localStorage.getItem('avatarPreview');
+    if (savedAvatar) {
+      setAvatarPreview(savedAvatar);
+    }
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -49,6 +57,21 @@ const Dashboard = () => {
 
   const toggleSidebar = () => {
     setSidebarActive(!sidebarActive);
+  };
+
+  const handleAvatarChange = (event) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const imageData = reader.result;
+      if (typeof imageData === 'string') {
+        setAvatarPreview(imageData);
+        localStorage.setItem('avatarPreview', imageData);
+      }
+    };
+    reader.readAsDataURL(file);
   };
 
   // --- (Fin de la Lógica) ---
@@ -95,8 +118,22 @@ const Dashboard = () => {
           <div className="user-panel">
             <a href="#" className="logout" onClick={handleLogout}>Cerrar sesión</a>
             <div className="user-avatar">
-              <div className="avatar"></div>
-              <span className="user-role">{usuario ? usuario.email : 'Cargando...'}</span>
+              <label className="avatar" htmlFor="avatar-upload" title="Subir foto de perfil">
+                {avatarPreview ? (
+                  <img src={avatarPreview} alt="Foto de perfil" />
+                ) : (
+                  <span className="avatar-placeholder">👤</span>
+                )}
+              </label>
+              <input
+                id="avatar-upload"
+                type="file"
+                accept="image/*"
+                onChange={handleAvatarChange}
+                style={{ display: 'none' }}
+              />
+              <span className="avatar-upload-text">Subir foto</span>
+              <span className="user-role">{usuario?.email || ''}</span>
             </div>
           </div>
         </header>

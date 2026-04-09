@@ -1064,3 +1064,40 @@ body {
   /* Añade un relleno inferior para que no se pegue al footer */
   padding-bottom: 50px;
 }
+
+/* ==============================
+   Avatar de perfil (subida de foto)
+============================== */
+.user-avatar {
+  align-items: center;
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: #e9eef2;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  font-size: 3.2rem;
+  line-height: 1;
+  color: #7a8a95;
+}
+
+.avatar-upload-text {
+  margin-top: 0.45rem;
+  font-size: 0.82rem;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+}
