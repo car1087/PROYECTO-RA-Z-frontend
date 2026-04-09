@@ -1,3 +1,4 @@
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Login from './Login';
 import Registro from './Registro';
@@ -13,7 +14,7 @@ import EstadoInicialQR from './components/dashboard/EstadoInicialQR';
 import Ajustes from './components/dashboard/Ajustes';
 import Notificaciones from './components/dashboard/Notificaciones';
 import PerfilPublico from './components/PerfilPublico';
-import './App.css'
+import './App.css';
 
 function App() {
   return (

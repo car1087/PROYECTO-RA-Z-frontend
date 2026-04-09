@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
 import { useNavigate, Outlet, Link } from 'react-router-dom';
 import './Dashboard.css'; // Asegúrate de que el CSS esté en src/Dashboard.css
