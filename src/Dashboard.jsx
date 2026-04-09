@@ -1,7 +1,11 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
-import { useNavigate, Outlet, Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, Routes, Route, Navigate, Link } from 'react-router-dom';
 import './Dashboard.css';
+import Inicio from './components/dashboard/Inicio';
+import InformacionMedica from './components/dashboard/InformacionMedica';
+import Contactos from './components/dashboard/Contactos';
+import DispositivoQR from './components/dashboard/DispositivoQR';
+import Ajustes from './components/dashboard/Ajustes';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -19,7 +23,7 @@ const Dashboard = () => {
       try {
         setUsuario(JSON.parse(user));
       } catch (error) {
-        console.error('Error parsing user:', error);
+        console.error('Error parsing user:', error); 
       }
     }
   }, []);
@@ -86,7 +90,15 @@ const Dashboard = () => {
         {/* 📦 Contenedor dinámico donde se cargarán los módulos */}
         <section className="content">
           <div id="contenido-dinamico">
-            <Outlet />
+            <Routes>
+              <Route index element={<Inicio />} />
+              <Route path="/" element={<Inicio />} />
+              <Route path="informacion-medica" element={<InformacionMedica />} />
+              <Route path="contactos" element={<Contactos />} />
+              <Route path="dispositivo-qr" element={<DispositivoQR />} />
+              <Route path="ajustes" element={<Ajustes />} />
+              <Route path="*" element={<Navigate to="" replace />} />
+            </Routes>
           </div>
         </section>
       </main>
