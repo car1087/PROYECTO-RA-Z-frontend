@@ -1,52 +1,26 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { useNavigate, Outlet, Link } from 'react-router-dom';
-import './Dashboard.css'; // Asegúrate de que el CSS esté en src/Dashboard.css
+import './Dashboard.css';
 
 const Dashboard = () => {
-  // --- (Aquí va toda la LÓGICA que ya tenías) ---
-  // (useState, useEffect, handleLogout, etc.)
   const navigate = useNavigate();
   const [sidebarActive, setSidebarActive] = useState(false);
   const [usuario, setUsuario] = useState(null);
 
-  const API_URL = import.meta.env.VITE_BACKEND_URL || 'https://proyecto-ra-z-backend-production.up.railway.app';
-
   useEffect(() => {
-    const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
-
-    if (!token || !user) {
-      console.log('No hay sesión activa, redirigiendo al login...');
-      localStorage.clear();
-      navigate('/login');
+    if (!user) {
+      window.location.href = '/login';
       return;
     }
-
     try {
       setUsuario(JSON.parse(user));
     } catch (error) {
-      console.error('Error parsing user from localStorage:', error);
-      localStorage.clear();
-      navigate('/login');
-      return;
+      console.error('Error parsing user:', error);
+      window.location.href = '/login';
     }
-
-    const fetchUsuario = async () => {
-      const response = await fetch(`${API_URL}/api/auth/me`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setUsuario(data.user);
-      } else {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        navigate('/login');
-      }
-    };
-    fetchUsuario();
-  }, [navigate, API_URL]);
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('token');

@@ -23,7 +23,6 @@ const EditarInformacion = () => {
   const [editingMedicamentoId, setEditingMedicamentoId] = useState(null);
   const [editingAlergiaId, setEditingAlergiaId] = useState(null);
 
-  const API_URL = import.meta.env.VITE_BACKEND_URL || 'https://proyecto-ra-z-backend-production.up.railway.app';
 
   const calculateAge = (birthDate) => {
     if (!birthDate) return '';
@@ -47,10 +46,10 @@ const EditarInformacion = () => {
 
       try {
         const [datosRes, enfRes, alerRes, medRes] = await Promise.all([
-          fetch(`${API_URL}/api/dashboard/datos-personales`, { headers }),
-          fetch(`${API_URL}/api/dashboard/enfermedades-base`, { headers }),
-          fetch(`${API_URL}/api/dashboard/alergias`, { headers }),
-          fetch(`${API_URL}/api/dashboard/medicamentos`, { headers }),
+          fetch(`https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/datos-personales`, { headers }),
+          fetch(`https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/enfermedades-base`, { headers }),
+          fetch(`https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/alergias`, { headers }),
+          fetch(`https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/medicamentos`, { headers }),
         ]);
 
         const datos = await datosRes.json();
@@ -78,14 +77,14 @@ const EditarInformacion = () => {
     };
 
     fetchData();
-  }, [API_URL]);
+  }, []);
 
   useEffect(() => {
     const fetchUser = async () => {
       const token = localStorage.getItem('token');
       if (!token) return;
       try {
-        const response = await fetch(`${API_URL}/api/auth/me`, {
+        const response = await fetch(`https://proyecto-ra-z-backend-production.up.railway.app/api/auth/me`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {
@@ -97,7 +96,7 @@ const EditarInformacion = () => {
       }
     };
     fetchUser();
-  }, [API_URL]);
+  }, []);
 
   const handleSubmodulo = (modulo) => {
     setSelectedForm(modulo);
@@ -114,7 +113,7 @@ const EditarInformacion = () => {
   const handleSaveDatos = async () => {
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch(`${API_URL}/api/informacion-medica`, {
+      const response = await fetch(`https://proyecto-ra-z-backend-production.up.railway.app/api/informacion-medica`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -137,7 +136,7 @@ const EditarInformacion = () => {
     const token = localStorage.getItem('token');
     try {
       const method = editingMedicamentoId ? 'PUT' : 'POST';
-      const url = editingMedicamentoId ? `${API_URL}/api/medicamentos/${editingMedicamentoId}` : `${API_URL}/api/medicamentos`;
+      const url = editingMedicamentoId ? `https://proyecto-ra-z-backend-production.up.railway.app/api/medicamentos/${editingMedicamentoId}` : `https://proyecto-ra-z-backend-production.up.railway.app/api/medicamentos`;
       const response = await fetch(url, {
         method,
         headers: {
@@ -153,7 +152,7 @@ const EditarInformacion = () => {
         setEditingMedicamentoId(null);
         // Refetch medicamentos
         const headers = { 'Authorization': `Bearer ${token}` };
-        const res = await fetch(`${API_URL}/api/dashboard/medicamentos`, { headers });
+        const res = await fetch(`https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/medicamentos`, { headers });
         setMedicamentos(await res.json());
       } else {
         alert('Error al guardar');
@@ -167,7 +166,7 @@ const EditarInformacion = () => {
     const token = localStorage.getItem('token');
     try {
       const method = editingAlergiaId ? 'PUT' : 'POST';
-      const url = editingAlergiaId ? `${API_URL}/api/alergias/${editingAlergiaId}` : `${API_URL}/api/alergias`;
+      const url = editingAlergiaId ? `https://proyecto-ra-z-backend-production.up.railway.app/api/alergias/${editingAlergiaId}` : `https://proyecto-ra-z-backend-production.up.railway.app/api/alergias`;
       const response = await fetch(url, {
         method,
         headers: {
@@ -183,7 +182,7 @@ const EditarInformacion = () => {
         setEditingAlergiaId(null);
         // Refetch alergias
         const headers = { 'Authorization': `Bearer ${token}` };
-        const res = await fetch(`${API_URL}/api/dashboard/alergias`, { headers });
+        const res = await fetch(`https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/alergias`, { headers });
         setAlergias(await res.json());
       } else {
         alert('Error al guardar');
@@ -197,7 +196,7 @@ const EditarInformacion = () => {
     const token = localStorage.getItem('token');
     try {
       const method = editingEnfermedadId ? 'PUT' : 'POST';
-      const url = editingEnfermedadId ? `${API_URL}/api/enfermedades/${editingEnfermedadId}` : `${API_URL}/api/enfermedades`;
+      const url = editingEnfermedadId ? `https://proyecto-ra-z-backend-production.up.railway.app/api/enfermedades/${editingEnfermedadId}` : `https://proyecto-ra-z-backend-production.up.railway.app/api/enfermedades`;
       const response = await fetch(url, {
         method,
         headers: {
@@ -213,7 +212,7 @@ const EditarInformacion = () => {
         setEditingEnfermedadId(null);
         // Refetch enfermedades
         const headers = { 'Authorization': `Bearer ${token}` };
-        const res = await fetch(`${API_URL}/api/dashboard/enfermedades-base`, { headers });
+        const res = await fetch(`https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/enfermedades-base`, { headers });
         setEnfermedades(await res.json());
       } else {
         alert('Error al guardar');
@@ -231,7 +230,7 @@ const EditarInformacion = () => {
   const handleDeleteEnfermedad = async (id) => {
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch(`${API_URL}/api/enfermedades/${id}`, {
+      const response = await fetch(`https://proyecto-ra-z-backend-production.up.railway.app/api/enfermedades/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` },
       });
@@ -239,7 +238,7 @@ const EditarInformacion = () => {
       if (response.ok) {
         // Refetch enfermedades
         const headers = { 'Authorization': `Bearer ${token}` };
-        const res = await fetch(`${API_URL}/api/dashboard/enfermedades-base`, { headers });
+        const res = await fetch(`https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/enfermedades-base`, { headers });
         setEnfermedades(await res.json());
       } else {
         alert('Error al eliminar');
@@ -262,7 +261,7 @@ const EditarInformacion = () => {
   const handleDeleteMedicamento = async (id) => {
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch(`${API_URL}/api/medicamentos/${id}`, {
+      const response = await fetch(`https://proyecto-ra-z-backend-production.up.railway.app/api/medicamentos/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` },
       });
@@ -270,7 +269,7 @@ const EditarInformacion = () => {
       if (response.ok) {
         // Refetch medicamentos
         const headers = { 'Authorization': `Bearer ${token}` };
-        const res = await fetch(`${API_URL}/api/dashboard/medicamentos`, { headers });
+        const res = await fetch(`https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/medicamentos`, { headers });
         setMedicamentos(await res.json());
       } else {
         alert('Error al eliminar');
@@ -292,7 +291,7 @@ const EditarInformacion = () => {
   const handleDeleteAlergia = async (id) => {
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch(`${API_URL}/api/alergias/${id}`, {
+      const response = await fetch(`https://proyecto-ra-z-backend-production.up.railway.app/api/alergias/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` },
       });
@@ -300,7 +299,7 @@ const EditarInformacion = () => {
       if (response.ok) {
         // Refetch alergias
         const headers = { 'Authorization': `Bearer ${token}` };
-        const res = await fetch(`${API_URL}/api/dashboard/alergias`, { headers });
+        const res = await fetch(`https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/alergias`, { headers });
         setAlergias(await res.json());
       } else {
         alert('Error al eliminar');

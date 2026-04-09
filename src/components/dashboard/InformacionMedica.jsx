@@ -13,7 +13,6 @@ const InformacionMedica = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const API_URL = import.meta.env.VITE_BACKEND_URL || 'https://proyecto-ra-z-backend-production.up.railway.app';
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,11 +24,11 @@ const InformacionMedica = () => {
           'Content-Type': 'application/json',
         };
         const [datosRes, infoRes, enfRes, alerRes, medRes] = await Promise.all([
-          fetch(`${API_URL}/api/dashboard/datos-personales`, { headers }),
-          fetch(`${API_URL}/api/dashboard/informacion-medica`, { headers }),
-          fetch(`${API_URL}/api/dashboard/enfermedades-base`, { headers }),
-          fetch(`${API_URL}/api/dashboard/alergias`, { headers }),
-          fetch(`${API_URL}/api/dashboard/medicamentos`, { headers }),
+          fetch(`https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/datos-personales`, { headers }),
+          fetch(`https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/informacion-medica`, { headers }),
+          fetch(`https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/enfermedades-base`, { headers }),
+          fetch(`https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/alergias`, { headers }),
+          fetch(`https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/medicamentos`, { headers }),
         ]);
 
         if (!datosRes.ok || !infoRes.ok || !enfRes.ok || !alerRes.ok || !medRes.ok) {

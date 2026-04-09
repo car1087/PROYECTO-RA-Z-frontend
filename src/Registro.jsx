@@ -27,8 +27,7 @@ const Registro = () => {
     }
 
     try {
-      const API_URL = import.meta.env.VITE_BACKEND_URL || 'https://proyecto-ra-z-backend-production.up.railway.app';
-      const response = await fetch(`${API_URL}/api/auth/register`, {
+      const response = await fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

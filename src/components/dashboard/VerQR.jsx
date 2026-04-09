@@ -10,14 +10,13 @@ const VerQR = () => {
   const [contactos, setContactos] = useState([]);
   const [formContacto, setFormContacto] = useState({ nombre: '', relacion: '', telefono: '' });
 
-  const API_URL = import.meta.env.VITE_BACKEND_URL || 'https://proyecto-ra-z-backend-production.up.railway.app';
 
   useEffect(() => {
     const fetchUser = async () => {
       const token = localStorage.getItem('token');
       if (!token) return;
       try {
-        const response = await fetch(`${API_URL}/api/auth/me`, {
+        const response = await fetch(`https://proyecto-ra-z-backend-production.up.railway.app/api/auth/me`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {
@@ -46,7 +45,7 @@ const VerQR = () => {
       const token = localStorage.getItem('token');
       const headers = { 'Authorization': `Bearer ${token}` };
       try {
-        const response = await fetch(`${API_URL}/api/dashboard/dispositivo/estado`, { headers });
+        const response = await fetch(`https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/dispositivo/estado`, { headers });
         if (response.ok) {
           const data = await response.json();
           setEstado(data.estado);
@@ -63,7 +62,7 @@ const VerQR = () => {
       const token = localStorage.getItem('token');
       const headers = { 'Authorization': `Bearer ${token}` };
       try {
-        const response = await fetch(`${API_URL}/api/dashboard/contactos`, { headers });
+        const response = await fetch(`https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/contactos`, { headers });
         if (response.ok) {
           const data = await response.json();
           setContactos(data);

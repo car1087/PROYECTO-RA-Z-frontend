@@ -7,14 +7,13 @@ const Contactos = () => {
   const [formContacto, setFormContacto] = useState({ nombre: '', relacion: '', telefono: '' });
   const [editingContactoId, setEditingContactoId] = useState(null);
 
-  const API_URL = import.meta.env.VITE_BACKEND_URL || 'https://proyecto-ra-z-backend-production.up.railway.app';
 
   useEffect(() => {
     const fetchContactos = async () => {
       const token = localStorage.getItem('token');
       const headers = { 'Authorization': `Bearer ${token}` };
       try {
-        const response = await fetch(`${API_URL}/api/dashboard/contactos`, { headers });
+        const response = await fetch(`https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/contactos`, { headers });
         if (response.ok) {
           const data = await response.json();
           setContactos(data);
@@ -30,7 +29,7 @@ const Contactos = () => {
     const token = localStorage.getItem('token');
     try {
       const method = editingContactoId ? 'PUT' : 'POST';
-      const url = editingContactoId ? `${API_URL}/api/contactos/${editingContactoId}` : `${API_URL}/api/contactos`;
+      const url = editingContactoId ? `https://proyecto-ra-z-backend-production.up.railway.app/api/contactos/${editingContactoId}` : `https://proyecto-ra-z-backend-production.up.railway.app/api/contactos`;
       const response = await fetch(url, {
         method,
         headers: {
@@ -46,7 +45,7 @@ const Contactos = () => {
         setEditingContactoId(null);
         // Refetch contactos
         const headers = { 'Authorization': `Bearer ${token}` };
-        const res = await fetch(`${API_URL}/api/dashboard/contactos`, { headers });
+        const res = await fetch(`https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/contactos`, { headers });
         setContactos(await res.json());
       } else {
         alert('Error al guardar');
@@ -68,7 +67,7 @@ const Contactos = () => {
   const handleDeleteContacto = async (id) => {
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch(`${API_URL}/api/dashboard/contactos-emergencia/${id}`, {
+      const response = await fetch(`https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/contactos-emergencia/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` },
       });
@@ -76,7 +75,7 @@ const Contactos = () => {
       if (response.ok) {
         // Refetch contactos
         const headers = { 'Authorization': `Bearer ${token}` };
-        const res = await fetch(`${API_URL}/api/dashboard/contactos`, { headers });
+        const res = await fetch(`https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/contactos`, { headers });
         setContactos(await res.json());
       } else {
         alert('Error al eliminar');

@@ -4,14 +4,13 @@ import { useState, useEffect } from 'react';
 const EstadoInicialQR = () => {
   const [estado, setEstado] = useState('');
 
-  const API_URL = import.meta.env.VITE_BACKEND_URL || 'https://proyecto-ra-z-backend-production.up.railway.app';
 
   useEffect(() => {
     const fetchEstado = async () => {
       const token = localStorage.getItem('token');
       const headers = { 'Authorization': `Bearer ${token}` };
       try {
-        const response = await fetch(`${API_URL}/api/dashboard/dispositivo/estado`, { headers });
+        const response = await fetch(`https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/dispositivo/estado`, { headers });
         if (response.ok) {
           const data = await response.json();
           setEstado(data.estado);
