@@ -6,9 +6,9 @@ const API_BASE = 'https://proyecto-ra-z-backend-production.up.railway.app';
 const Inicio = () => {
   const [resumen, setResumen] = useState(null);
   const [error, setError] = useState(null);
-  const user = localStorage.getItem('user');
-  const usuario = user ? JSON.parse(user) : null;
-  const nombre = usuario?.nombre || usuario?.name || usuario?.email || 'usuario';
+  const storedUser = localStorage.getItem('user');
+  const user = storedUser && storedUser !== 'undefined' ? JSON.parse(storedUser) : null;
+  const nombre = user?.nombre || user?.name || user?.email || 'usuario';
 
   useEffect(() => {
     const token = localStorage.getItem('token');

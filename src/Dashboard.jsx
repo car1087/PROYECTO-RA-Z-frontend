@@ -18,14 +18,15 @@ const Dashboard = () => {
       window.location.href = '/login';
       return;
     }
-    const user = localStorage.getItem('user');
-    if (user) {
-      try {
-        setUsuario(JSON.parse(user));
-      } catch (error) {
-        console.error('Error parsing user:', error); 
-      }
+
+    const storedUser = localStorage.getItem('user');
+    const user = storedUser && storedUser !== 'undefined' ? JSON.parse(storedUser) : null;
+    if (!user) {
+      window.location.href = '/login';
+      return;
     }
+
+    setUsuario(user);
   }, []);
 
   const handleLogout = () => {
