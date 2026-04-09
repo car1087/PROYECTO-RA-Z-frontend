@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240" role="img" aria-labelledby="title desc">
+  <title id="title">Logo PILD</title>
+  <desc id="desc">Isotipo azul con cruz medica para PILD</desc>
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4DA8DA"/>
+      <stop offset="100%" stop-color="#2E7FB1"/>
+    </linearGradient>
+  </defs>
+  <rect x="18" y="18" width="204" height="204" rx="40" fill="url(#g1)"/>
+  <circle cx="120" cy="120" r="62" fill="#FFFFFF" opacity="0.96"/>
+  <rect x="110" y="82" width="20" height="76" rx="6" fill="#2E7FB1"/>
+  <rect x="82" y="110" width="76" height="20" rx="6" fill="#2E7FB1"/>
+</svg>
