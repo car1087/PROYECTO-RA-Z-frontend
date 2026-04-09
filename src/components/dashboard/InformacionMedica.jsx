@@ -16,12 +16,17 @@ const InformacionMedica = () => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem('token');
+        if (!token) {
+          navigate('/login');
+          return;
+        }
+
         const headers = {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         };
 
-        const [datosRes, infoRes, enfRes, alerRes, medRes] = await Promise.all([
+        const [datosRes, infoRes, enfRes, alerRes, medRes] = await Promise.allSettled([
           fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/datos-personales', { headers }),
           fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/informacion-medica', { headers }),
           fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/enfermedades-base', { headers }),
@@ -29,15 +34,26 @@ const InformacionMedica = () => {
           fetch('https://proyecto-ra-z-backend-production.up.railway.app/api/dashboard/medicamentos', { headers }),
         ]);
 
-        if (!datosRes.ok || !infoRes.ok || !enfRes.ok || !alerRes.ok || !medRes.ok) {
-          throw new Error('Error al cargar los datos');
+        // Solo datos personales es critico para renderizar la vista.
+        if (datosRes.status !== 'fulfilled' || !datosRes.value.ok) {
+          throw new Error('No se pudieron cargar los datos principales');
         }
 
-        const datosData = await datosRes.json();
-        const infoData = await infoRes.json();
-        const enfData = await enfRes.json();
-        const alerData = await alerRes.json();
-        const medData = await medRes.json();
+        const safeJson = async (result, fallback) => {
+          if (result.status !== 'fulfilled') return fallback;
+          if (!result.value.ok) return fallback;
+          try {
+            return await result.value.json();
+          } catch {
+            return fallback;
+          }
+        };
+
+        const datosData = await safeJson(datosRes, null);
+        const infoData = await safeJson(infoRes, null);
+        const enfData = await safeJson(enfRes, []);
+        const alerData = await safeJson(alerRes, []);
+        const medData = await safeJson(medRes, []);
 
         setDatosPersonales(datosData);
         setInformacionMedica(infoData);
@@ -52,7 +68,7 @@ const InformacionMedica = () => {
     };
 
     fetchData();
-  }, []);
+  }, [navigate]);
 
   if (loading) {
     return <section className="modulo"><p>Cargando información médica...</p></section>;
