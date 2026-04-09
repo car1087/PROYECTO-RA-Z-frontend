@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { API_BASE } from '../../../config/api';
+import { API_BASE } from '../../config/api';
 
 const Ajustes = () => {
   const [config, setConfig] = useState(null);
