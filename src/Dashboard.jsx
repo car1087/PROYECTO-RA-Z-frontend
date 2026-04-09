@@ -9,16 +9,18 @@ const Dashboard = () => {
   const [usuario, setUsuario] = useState(null);
 
   useEffect(() => {
-    const user = localStorage.getItem('user');
-    if (!user) {
+    const token = localStorage.getItem('token');
+    if (!token) {
       window.location.href = '/login';
       return;
     }
-    try {
-      setUsuario(JSON.parse(user));
-    } catch (error) {
-      console.error('Error parsing user:', error);
-      window.location.href = '/login';
+    const user = localStorage.getItem('user');
+    if (user) {
+      try {
+        setUsuario(JSON.parse(user));
+      } catch (error) {
+        console.error('Error parsing user:', error);
+      }
     }
   }, []);
 
