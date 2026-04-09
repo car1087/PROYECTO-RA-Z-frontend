@@ -14,19 +14,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (!token) {
-      window.location.href = '/login';
-      return;
-    }
-
-    const storedUser = localStorage.getItem('user');
-    const user = storedUser && storedUser !== 'undefined' ? JSON.parse(storedUser) : null;
-    if (!user) {
-      window.location.href = '/login';
-      return;
-    }
-
-    setUsuario(user);
+    if (!token) { window.location.href = '/login'; }
   }, []);
 
   const handleLogout = () => {
