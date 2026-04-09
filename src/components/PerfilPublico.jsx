@@ -10,7 +10,7 @@ function PerfilPublico() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const API_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+        const API_URL = import.meta.env.VITE_BACKEND_URL || 'https://proyecto-ra-z-backend-production.up.railway.app';
         const response = await fetch(`${API_URL}/api/perfil-publico/${id}`);
         if (!response.ok) {
           throw new Error('Failed to fetch profile');

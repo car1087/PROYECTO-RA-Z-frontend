@@ -9,7 +9,7 @@ const Dashboard = () => {
   const [sidebarActive, setSidebarActive] = useState(false);
   const [usuario, setUsuario] = useState(null);
 
-  const API_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+  const API_URL = import.meta.env.VITE_BACKEND_URL || 'https://proyecto-ra-z-backend-production.up.railway.app';
 
   useEffect(() => {
     const token = localStorage.getItem('token');

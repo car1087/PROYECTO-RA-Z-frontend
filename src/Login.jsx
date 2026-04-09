@@ -9,7 +9,8 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://tu-backend-railway.app/api/auth/login', {
+      const API_URL = import.meta.env.VITE_BACKEND_URL || 'https://proyecto-ra-z-backend-production.up.railway.app';
+      const response = await axios.post(`${API_URL}/api/auth/login`, {
         email,
         password,
       });

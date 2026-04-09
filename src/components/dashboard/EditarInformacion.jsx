@@ -22,7 +22,7 @@ const EditarInformacion = () => {
   const [editingMedicamentoId, setEditingMedicamentoId] = useState(null);
   const [editingAlergiaId, setEditingAlergiaId] = useState(null);
 
-  const API_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+  const API_URL = import.meta.env.VITE_BACKEND_URL || 'https://proyecto-ra-z-backend-production.up.railway.app';
 
   const calculateAge = (birthDate) => {
     if (!birthDate) return '';

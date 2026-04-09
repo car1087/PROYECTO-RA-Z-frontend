@@ -6,7 +6,7 @@ const Contactos = () => {
   const [formContacto, setFormContacto] = useState({ nombre: '', relacion: '', telefono: '' });
   const [editingContactoId, setEditingContactoId] = useState(null);
 
-  const API_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+  const API_URL = import.meta.env.VITE_BACKEND_URL || 'https://proyecto-ra-z-backend-production.up.railway.app';
 
   useEffect(() => {
     const fetchContactos = async () => {
