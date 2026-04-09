@@ -1,41 +1,30 @@
+import axios from 'axios';
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    
     try {
-      // 1. Conectamos al backend real
-      const API_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
-      const response = await fetch(`${API_URL}/api/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
+      const response = await axios.post('https://tu-backend-railway.app/api/auth/login', {
+        email,
+        password,
       });
 
-      const data = await response.json();
+      if (response.data.success) {
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
 
-      if (response.ok) {
-        // 2. Si el login es bueno, guardamos el TOKEN REAL
-        localStorage.setItem('token', data.token);
-        // 3. Navegamos al dashboard
-        navigate('/dashboard');
-      } else {
-        // Si el backend dice que el email o pass es incorrecto
-        console.error(data.message || 'Error en el login');
-        // (Aquí podrías mostrar un mensaje de error al usuario)
+        console.log('Sesión guardada correctamente');
+
+        window.location.href = '/dashboard';
       }
-
     } catch (error) {
-      // Si el servidor (puerto 3000) está apagado o hay un error de red
-      console.error('No se pudo conectar al servidor:', error);
+      console.error('Error en el login:', error.response?.data?.message || error.message);
+      alert('Credenciales incorrectas');
     }
   };
 
@@ -91,7 +80,7 @@ const Login = () => {
       <section className="login__right">
         <h1 className="brand-title">PILD</h1>
 
-        <form className="auth-form" onSubmit={handleSubmit}>
+        <form className="auth-form" onSubmit={handleLogin}>
           <label className="field-label">Usuario</label>
           <input
             className="input"

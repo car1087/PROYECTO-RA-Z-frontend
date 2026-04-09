@@ -13,10 +13,24 @@ const Dashboard = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (!token) {
+    const user = localStorage.getItem('user');
+
+    if (!token || !user) {
+      console.log('No hay sesión activa, redirigiendo al login...');
+      localStorage.clear();
       navigate('/login');
       return;
     }
+
+    try {
+      setUsuario(JSON.parse(user));
+    } catch (error) {
+      console.error('Error parsing user from localStorage:', error);
+      localStorage.clear();
+      navigate('/login');
+      return;
+    }
+
     const fetchUsuario = async () => {
       const response = await fetch(`${API_URL}/api/auth/me`, {
         headers: { 'Authorization': `Bearer ${token}` }
@@ -26,6 +40,7 @@ const Dashboard = () => {
         setUsuario(data.user);
       } else {
         localStorage.removeItem('token');
+        localStorage.removeItem('user');
         navigate('/login');
       }
     };
@@ -34,6 +49,7 @@ const Dashboard = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     navigate('/login');
   };
 
