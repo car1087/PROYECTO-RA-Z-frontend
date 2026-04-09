@@ -4,10 +4,15 @@ import { useNavigate, Link } from 'react-router-dom';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMessage('');
+    setIsSubmitting(true);
     
     try {
       // 1. Conectamos al backend real
@@ -27,14 +32,18 @@ const Login = () => {
         // 3. Navegamos al dashboard
         navigate('/dashboard');
       } else {
-        // Si el backend dice que el email o pass es incorrecto
-        console.error(data.message || 'Error en el login');
-        // (Aquí podrías mostrar un mensaje de error al usuario)
+        if (response.status === 401) {
+          setErrorMessage('Usuario o contrasena incorrectos. Verifica tus datos e intenta nuevamente.');
+        } else {
+          setErrorMessage(data.message || 'No fue posible iniciar sesion. Intenta de nuevo en unos minutos.');
+        }
       }
 
     } catch (error) {
-      // Si el servidor (puerto 3000) está apagado o hay un error de red
+      setErrorMessage('No se pudo conectar con el servidor. Revisa tu internet e intenta otra vez.');
       console.error('No se pudo conectar al servidor:', error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -103,17 +112,39 @@ const Login = () => {
             required
           />
           <label className="field-label">Contraseña</label>
-          <input
-            className="input"
-            type="password"
-            name="password"
-            placeholder="Ingrese su Contraseña"
-            autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <button className="button" type="submit">Iniciar Sesión</button>
+          <div className="password-field-wrap">
+            <input
+              className="input"
+              type={showPassword ? 'text' : 'password'}
+              name="password"
+              placeholder="Ingrese su Contraseña"
+              autoComplete="current-password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                if (errorMessage) setErrorMessage('');
+              }}
+              required
+            />
+            <button
+              type="button"
+              className="password-toggle"
+              onClick={() => setShowPassword((prev) => !prev)}
+              aria-label={showPassword ? 'Ocultar contrasena' : 'Mostrar contrasena'}
+            >
+              {showPassword ? 'Ocultar' : 'Mostrar'}
+            </button>
+          </div>
+
+          {errorMessage && (
+            <div className="auth-alert" role="alert" aria-live="polite">
+              {errorMessage}
+            </div>
+          )}
+
+          <button className="button" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Validando...' : 'Iniciar Sesión'}
+          </button>
         </form>
 
         <p className="auth-meta">¿Olvidaste tu Contraseña? · ¿No tienes Cuenta?</p>

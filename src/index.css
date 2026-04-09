@@ -104,6 +104,39 @@ body{
     background: var(--grisclaro);
 }
 
+.password-field-wrap{
+  width: 100%;
+  display: grid;
+  gap: 8px;
+}
+
+.password-toggle{
+  justify-self: end;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--azulceleste);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.password-toggle:hover{
+  filter: brightness(0.97);
+}
+
+.auth-alert{
+  width: 100%;
+  background: #ffe8e8;
+  color: #9b1c1c;
+  border: 1px solid #ffc5c5;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 14px;
+  text-align: left;
+}
+
 .button{
     margin-top: 8px;
     width: 100%;
