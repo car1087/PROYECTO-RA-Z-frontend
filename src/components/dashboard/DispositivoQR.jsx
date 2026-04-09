@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { API_BASE } from '../../config/api';
 
+// Fix rutas import
+
 const DispositivoQR = () => {
   const [dispositivo, setDispositivo] = useState(null);
   const [loading, setLoading] = useState(true);
