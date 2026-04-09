@@ -262,5 +262,5 @@ body{
 
 /* Responsive para registro */
 @media (max-width: 900px){
-  .grid-2{ grid-template-columns: 1fr; }
+  .grid-2{ grid-template-columns: 1fr; } 
 }
