@@ -1134,6 +1134,74 @@ body {
   margin: 0;
 }
 
+/* ==============================
+   Ajuste final avatar en esquina
+============================== */
+.topbar {
+  position: relative;
+}
+
+.topbar .user-panel {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: auto;
+  gap: 0.9rem;
+}
+
+.topbar .user-avatar {
+  position: static;
+  transform: none;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.topbar .avatar {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+}
+
+.topbar .avatar-placeholder {
+  font-size: 1.9rem;
+}
+
+.topbar .user-role {
+  margin-top: 0.28rem;
+  font-size: 0.72rem;
+  color: #ffffff;
+  max-width: 120px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 600px) {
+  .topbar .user-panel {
+    right: 0.65rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .topbar .avatar {
+    width: 48px;
+    height: 48px;
+  }
+
+  .topbar .avatar-placeholder {
+    font-size: 1.45rem;
+  }
+
+  .topbar .user-role {
+    display: none;
+  }
+}
+
 .menu li a {
   border: 1px solid transparent;
   border-radius: 10px;
