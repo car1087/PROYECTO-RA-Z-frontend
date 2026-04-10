@@ -1108,3 +1108,52 @@ body {
   padding: 0.2rem 0.5rem;
   border-radius: 999px;
 }
+
+/* ==============================
+   Orden visual del menu lateral
+============================== */
+.sidebar {
+  overflow-y: auto;
+}
+
+.menu {
+  margin-top: 1.1rem;
+  padding: 0 0.65rem;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.menu li {
+  margin: 0;
+}
+
+.menu li a {
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 0.78rem 0.9rem;
+  font-weight: 500;
+}
+
+.menu li a .icon {
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #eef5fa;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.menu li a:hover,
+.menu li a.active {
+  background-color: #4da8da;
+  border-color: #4da8da;
+  color: #ffffff;
+}
+
+.menu li a:hover .icon,
+.menu li a.active .icon {
+  background: rgba(255, 255, 255, 0.2);
+}
