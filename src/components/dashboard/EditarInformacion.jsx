@@ -356,14 +356,17 @@ const EditarInformacion = () => {
       <div className="contenedor">
         {!selectedForm ? (
           <>
-            <ul>
-              <li><a href="#" onClick={(e) => { e.preventDefault(); handleSubmodulo('datos_personales'); }}>Datos personales</a></li>
-              <li><a href="#" onClick={(e) => { e.preventDefault(); handleSubmodulo('enfermedades_base'); }}>Enfermedades de base</a></li>
-              <li><a href="#" onClick={(e) => { e.preventDefault(); handleSubmodulo('medicamentos'); }}>Medicamentos</a></li>
-              <li><a href="#" onClick={(e) => { e.preventDefault(); handleSubmodulo('alergias'); }}>Alergias</a></li>
+            <h2 className="editar-titulo">Editar Información Médica</h2>
+            <p className="editar-subtitulo">Selecciona el módulo que quieres actualizar.</p>
+
+            <ul className="editar-menu">
+              <li><button type="button" onClick={() => handleSubmodulo('datos_personales')}>Datos personales</button></li>
+              <li><button type="button" onClick={() => handleSubmodulo('enfermedades_base')}>Enfermedades de base</button></li>
+              <li><button type="button" onClick={() => handleSubmodulo('medicamentos')}>Medicamentos</button></li>
+              <li><button type="button" onClick={() => handleSubmodulo('alergias')}>Alergias</button></li>
             </ul>
 
-            <button className="btn" onClick={handleVolver}>
+            <button className="btn btn-volver-menu" onClick={handleVolver}>
               ← Volver
             </button>
           </>
