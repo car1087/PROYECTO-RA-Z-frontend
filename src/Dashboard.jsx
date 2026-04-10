@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, Outlet, Link } from 'react-router-dom';
 import './Dashboard.css'; // Asegúrate de que el CSS esté en src/Dashboard.css
 
@@ -10,7 +10,6 @@ const Dashboard = () => {
   const [usuario, setUsuario] = useState(null);
   const [loadingSesion, setLoadingSesion] = useState(true);
   const [avatarPreview, setAvatarPreview] = useState('');
-  const avatarInputRef = useRef(null);
 
   useEffect(() => {
     const savedAvatar = localStorage.getItem('avatarPreview');
@@ -60,25 +59,6 @@ const Dashboard = () => {
     setSidebarActive(!sidebarActive);
   };
 
-  const handleAvatarChange = (event) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const imageData = reader.result;
-      if (typeof imageData === 'string') {
-        setAvatarPreview(imageData);
-        localStorage.setItem('avatarPreview', imageData);
-      }
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const handleAvatarClick = () => {
-    avatarInputRef.current?.click();
-  };
-
   // --- (Fin de la Lógica) ---
 
 
@@ -123,27 +103,13 @@ const Dashboard = () => {
           <div className="user-panel">
             <a href="#" className="logout" onClick={handleLogout}>Cerrar sesión</a>
             <div className="user-avatar">
-              <button
-                type="button"
-                className="avatar avatar-button"
-                title="Subir foto de perfil"
-                onClick={handleAvatarClick}
-              >
+              <div className="avatar" aria-hidden="true">
                 {avatarPreview ? (
                   <img src={avatarPreview} alt="Foto de perfil" />
                 ) : (
                   <span className="avatar-placeholder">👤</span>
                 )}
-              </button>
-              <input
-                id="avatar-upload"
-                ref={avatarInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleAvatarChange}
-                style={{ display: 'none' }}
-              />
-              <span className="avatar-upload-text">Subir foto</span>
+              </div>
               <span className="user-role">{usuario?.email || ''}</span>
             </div>
           </div>
