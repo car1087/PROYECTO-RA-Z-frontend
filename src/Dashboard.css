@@ -1135,19 +1135,22 @@ body {
 }
 
 /* ==============================
-   Ajuste final avatar en esquina
+   Ajuste final avatar superior
 ============================== */
 .topbar {
   position: relative;
+  padding-right: 6.2rem;
 }
 
 .topbar .user-panel {
   position: absolute;
-  right: 1rem;
+  right: 0.9rem;
   top: 50%;
   transform: translateY(-50%);
   width: auto;
-  gap: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
 }
 
 .topbar .user-avatar {
@@ -1160,19 +1163,19 @@ body {
 }
 
 .topbar .avatar {
-  width: 62px;
-  height: 62px;
+  width: 58px;
+  height: 58px;
   border-radius: 50%;
   border: 2px solid #ffffff;
 }
 
 .topbar .avatar-placeholder {
-  font-size: 1.9rem;
+  font-size: 1.85rem;
 }
 
 .topbar .user-role {
-  margin-top: 0.28rem;
-  font-size: 0.72rem;
+  margin-top: 0.22rem;
+  font-size: 0.7rem;
   color: #ffffff;
   max-width: 120px;
   text-align: center;
@@ -1182,25 +1185,30 @@ body {
 }
 
 @media (max-width: 600px) {
+  .topbar {
+    padding-right: 4.6rem;
+  }
+
   .topbar .user-panel {
-    right: 0.65rem;
+    right: 0.5rem;
     top: 50%;
     transform: translateY(-50%);
   }
 
   .topbar .avatar {
-    width: 48px;
-    height: 48px;
+    width: 46px;
+    height: 46px;
   }
 
   .topbar .avatar-placeholder {
-    font-size: 1.45rem;
+    font-size: 1.4rem;
   }
 
   .topbar .user-role {
     display: none;
   }
 }
+
 
 .menu li a {
   border: 1px solid transparent;
